@@ -3,3 +3,5 @@
 10.0.0.5 - - [07/Dec/2025:10:20:45 +0000] "GET /dashboard HTTP/1.1" 505 100
 10.0.0.5 - - [07/Dec/2025:10:20:45 +0000] "GET /dashboard HTTP/1.1" 200 100
 10.0.0.5 - - [07/Dec/2025:10:20:45 +0000] GET/dashboard HTTP/1.1" 200100
+INVALID LOG ENTRY TEST
+

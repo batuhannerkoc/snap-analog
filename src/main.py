@@ -1,6 +1,7 @@
 import re
 from collections import Counter
 from datetime import datetime
+import json
 
 log_pattern = re.compile(
     r"(?P<ip>\d{1,3}(?:\.\d{1,3}){3})\s+"  # IP address
@@ -13,76 +14,87 @@ log_pattern = re.compile(
 )
 
 
-totalRequests = 0
-totalSize = 0
-failedAttempts = Counter()
-ips = Counter()
-statues = Counter()
-minutes = Counter()
-urls = Counter()
+def analyze_log(filepath):
 
-try:
+    total_requests = 0
+    sizes = []
+    failed_attempt = Counter()
+    ips = Counter()
+    statuses = Counter()
+    status_groups = {"2xx": 0, "3xx": 0, "4xx": 0, "5xx": 0}
+    minutes = Counter()
+    urls = Counter()
+    methods = Counter()
 
-    with open("../sample_logs/sample.log", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            match = log_pattern.match(line)
-            try:
-                if match:
-                    # matching is succesful
+    def update_counter(counter, key):
+        counter[key] += 1
 
-                    totalRequests += 1
+    def parse_minute(timestamp_str):
+        timestamp_datetime = datetime.strptime(timestamp_str, "%d/%b/%Y:%H:%M:%S %z")
+        return timestamp_datetime.strftime("%Y-%m-%d %H:%M")
 
-                    size = match.group("size")
-                    if size.isdigit():
-                        totalSize += int(size)
+    try:
+        with open(filepath, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                try:
+                    match = log_pattern.match(line)
 
-                    ip = match.group("ip")
-                    ips[ip] += 1
+                    if match:
+                        # matching is succesful
 
-                    status = match.group("status")
-                    statues[status] += 1
+                        total_requests += 1
 
-                    timestamp = match.group("timestamp")
-                    timestamp_datetime = datetime.strptime(
-                        timestamp, "%d/%b/%Y:%H:%M:%S %z"
-                    )
-                    minute_str = timestamp_datetime.strftime("%Y-%m-%d %H:%M")
-                    minutes[minute_str] += 1
+                        size = match.group("size")
+                        if size.isdigit():
+                            sizes.append(int(size))
+                        ip = match.group("ip")
+                        update_counter(ips, ip)
 
-                    url = match.group("request")
-                    urls[url] += 1
+                        status = match.group("status")
+                        group = f"{status[0]}xx"
+                        status_groups[group] += 1
 
-                else:
-                    failedAttempts[line] += 1
-            except AttributeError:
-                print("log_pattern error")
+                        update_counter(statuses, status)
 
-except FileNotFoundError:
-    print("cant find the file")
+                        timestamp = match.group("timestamp")
+                        minute = parse_minute(timestamp)
+                        update_counter(minutes, minute)
 
-print("\nTotal Request Amount: ")
-print(totalRequests)
+                        method = match.group("request").split()[0]
+                        methods[method] += 1
 
-print("\nTotal Size: ")
-print(totalSize)
+                        url = match.group("request")
+                        update_counter(urls, url)
 
-print("\nTop 5 IP adresses:")
-for ip, cnt in ips.most_common(5):
-    print(f"{ip}: {cnt}")
+                    else:
+                        update_counter(failed_attempt, line)
 
-print("\nStatus Code Spread: ")
-for status, cnt in statues.items():
-    print(f"{status}: {cnt}")
+                except Exception as e:
+                    print("Failed Parsing: ", line, "Error: ", e)
+                    update_counter(failed_attempt, line)
 
-print("\nTop 5 Busiest Minutes: ")
-for minute, cnt in minutes.most_common(5):
-    print(f"{minute}: {cnt}")
+    except FileNotFoundError:
+        print("cant find the file")
 
-print("\nTop 5 URLs that got requested: ")
-for url, cnt in urls.most_common(5):
-    print(f"{url}: {cnt}")
+    stats = {
+        "total_requests": total_requests,
+        "size_stats": {
+            "min": min(sizes),
+            "max": max(sizes),
+            "avg": sum(sizes) // len(sizes),
+            "total": sum(sizes),
+        },
+        "top_ips": ips.most_common(5),
+        "status_distribution": dict(statuses),
+        "status_groups": status_groups,
+        "top_minutes": minutes.most_common(5),
+        "methods": dict(methods),
+        "top_urls": urls.most_common(5),
+        "failed_attempts": dict(failed_attempt),
+    }
+    return stats
 
-print("\nFailed Attempts:")
-for attempt, cnt in failedAttempts.items():
-    print(f"{attempt}: {cnt}")
+
+with open("report.json", "w", encoding="utf-8") as f:
+    json.dump(analyze_log("../sample_logs/sample.log"), f, indent=4)

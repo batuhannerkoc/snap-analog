@@ -1,0 +1,71 @@
+{
+    "total_requests": 4,
+    "size_stats": {
+        "min": 100,
+        "max": 100,
+        "avg": 100,
+        "total": 400
+    },
+    "top_ips": [
+        [
+            "10.0.0.5",
+            2
+        ],
+        [
+            "127.0.0.1",
+            1
+        ],
+        [
+            "192.168.1.10",
+            1
+        ]
+    ],
+    "status_distribution": {
+        "200": 2,
+        "401": 1,
+        "505": 1
+    },
+    "status_groups": {
+        "2xx": 2,
+        "3xx": 0,
+        "4xx": 1,
+        "5xx": 1
+    },
+    "top_minutes": [
+        [
+            "2025-12-07 10:20",
+            2
+        ],
+        [
+            "2025-12-07 10:15",
+            1
+        ],
+        [
+            "2025-12-07 10:17",
+            1
+        ]
+    ],
+    "methods": {
+        "GET": 3,
+        "POST": 1
+    },
+    "top_urls": [
+        [
+            "GET /dashboard HTTP/1.1",
+            2
+        ],
+        [
+            "GET /index.html HTTP/1.1",
+            1
+        ],
+        [
+            "POST /login HTTP/1.1",
+            1
+        ]
+    ],
+    "failed_attempts": {
+        "10.0.0.5 - - [07/Dec/2025:10:20:45 +0000] GET/dashboard HTTP/1.1\" 200100": 1,
+        "INVALID LOG ENTRY TEST": 1,
+        "": 1
+    }
+}
