@@ -1,7 +1,190 @@
-127.0.0.1 - - [07/Dec/2025:10:15:32 +0000] "GET /index.html HTTP/1.1" 200 100
-192.168.1.10 - - [07/Dec/2025:10:17:01 +0000] "POST /login HTTP/1.1" 401 100
-10.0.0.5 - - [07/Dec/2025:10:20:45 +0000] "GET /dashboard HTTP/1.1" 505 100
-10.0.0.5 - - [07/Dec/2025:10:20:45 +0000] "GET /dashboard HTTP/1.1" 200 100
-10.0.0.5 - - [07/Dec/2025:10:20:45 +0000] GET/dashboard HTTP/1.1" 200100
-INVALID LOG ENTRY TEST
+# ========================================
+# NORMAL VALID LOGLAR - Başarılı İstekler
+# ========================================
 
+192.168.1.100 - - [15/Dec/2024:10:15:30 +0000] "GET /index.html HTTP/1.1" 200 1024
+10.0.0.45 - - [15/Dec/2024:10:15:31 +0000] "POST /api/login HTTP/1.1" 200 512
+172.16.0.88 - - [15/Dec/2024:10:15:32 +0000] "PUT /api/user/123 HTTP/1.1" 200 2048
+192.168.1.101 - - [15/Dec/2024:10:15:33 +0000] "DELETE /api/user/456 HTTP/1.1" 204 0
+10.20.30.40 - - [15/Dec/2024:10:15:34 +0000] "PATCH /api/settings HTTP/1.1" 200 256
+203.0.113.50 - - [15/Dec/2024:10:15:35 +0000] "HEAD /status HTTP/1.1" 200 0
+198.51.100.42 - - [15/Dec/2024:10:15:36 +0000] "OPTIONS /api/info HTTP/1.1" 200 128
+
+# IPv6 adresleri
+2001:0db8:85a3:0000:0000:8a2e:0370:7334 - - [15/Dec/2024:10:15:37 +0000] "GET /ipv6test.html HTTP/1.1" 200 512
+::1 - - [15/Dec/2024:10:15:38 +0000] "GET /localhost.html HTTP/1.1" 200 256
+
+# Farklı status kodları (valid)
+192.168.1.102 - - [15/Dec/2024:10:15:39 +0000] "GET /moved.html HTTP/1.1" 301 0
+192.168.1.103 - - [15/Dec/2024:10:15:40 +0000] "GET /redirect.html HTTP/1.1" 302 0
+192.168.1.104 - - [15/Dec/2024:10:15:41 +0000] "POST /api/create HTTP/1.1" 201 1024
+192.168.1.105 - - [15/Dec/2024:10:15:42 +0000] "GET /notfound.html HTTP/1.1" 404 512
+192.168.1.106 - - [15/Dec/2024:10:15:43 +0000] "GET /forbidden.html HTTP/1.1" 403 256
+192.168.1.107 - - [15/Dec/2024:10:15:44 +0000] "POST /api/badrequest HTTP/1.1" 400 128
+192.168.1.108 - - [15/Dec/2024:10:15:45 +0000] "GET /error.html HTTP/1.1" 500 2048
+192.168.1.109 - - [15/Dec/2024:10:15:46 +0000] "POST /api/unavailable HTTP/1.1" 503 1024
+192.168.1.110 - - [15/Dec/2024:10:15:47 +0000] "GET /timeout.html HTTP/1.1" 504 512
+
+# Size field opsiyonel - tire ile
+192.168.1.111 - - [15/Dec/2024:10:15:48 +0000] "GET /nosize.html HTTP/1.1" 200 -
+
+# Büyük dosyalar
+192.168.1.112 - - [15/Dec/2024:10:15:49 +0000] "GET /bigfile.zip HTTP/1.1" 200 1048576
+192.168.1.113 - - [15/Dec/2024:10:15:50 +0000] "GET /video.mp4 HTTP/1.1" 206 524288
+
+# Aynı IP tekrarlı istekler
+192.168.1.100 - - [15/Dec/2024:10:15:51 +0000] "GET /dashboard.html HTTP/1.1" 200 4096
+192.168.1.100 - - [15/Dec/2024:10:15:52 +0000] "POST /api/data HTTP/1.1" 200 2048
+192.168.1.100 - - [15/Dec/2024:10:15:53 +0000] "GET /profile.html HTTP/1.1" 200 1536
+
+# ========================================
+# TIMESTAMP HATALARI
+# ========================================
+
+# Farklı timestamp formatı
+192.168.1.114 - - [2024-12-15 10:15:54] "GET /wrongformat.html HTTP/1.1" 200 1024
+
+# Geçersiz gün (32. gün yok)
+192.168.1.115 - - [32/Dec/2024:10:15:55 +0000] "GET /invalidday.html HTTP/1.1" 200 512
+
+# Geçersiz ay (XXX geçerli değil)
+192.168.1.116 - - [15/XXX/2024:10:15:56 +0000] "GET /invalidmonth.html HTTP/1.1" 200 256
+
+# Timestamp tamamen yanlış
+192.168.1.117 - - [INVALID_TIMESTAMP] "GET /badtimestamp.html HTTP/1.1" 200 128
+
+# Timestamp eksik (regex match olmaz)
+192.168.1.118 - - "GET /notimestamp.html HTTP/1.1" 200 64
+
+# ========================================
+# IP ADRESI HATALARI
+# ========================================
+
+# Geçersiz IP formatı
+INVALID_IP - - [15/Dec/2024:10:16:00 +0000] "GET /badip1.html HTTP/1.1" 200 1024
+
+# Hostname (IP değil - geçersiz)
+example.com - - [15/Dec/2024:10:16:01 +0000] "GET /hostname.html HTTP/1.1" 200 512
+
+# IP adresi aralık dışı
+999.999.999.999 - - [15/Dec/2024:10:16:02 +0000] "GET /badip2.html HTTP/1.1" 200 256
+
+# Alfabetik karakter
+abc123 - - [15/Dec/2024:10:16:03 +0000] "GET /badip3.html HTTP/1.1" 200 128
+
+# IP eksik (regex match olmaz)
+- - - [15/Dec/2024:10:16:04 +0000] "GET /noip.html HTTP/1.1" 200 64
+
+# Tire karakterleri
+--- - - [15/Dec/2024:10:16:05 +0000] "GET /dashes.html HTTP/1.1" 200 32
+
+# ========================================
+# STATUS CODE HATALARI
+# ========================================
+
+# Status code aralık dışı (999 geçersiz)
+192.168.1.119 - - [15/Dec/2024:10:16:10 +0000] "GET /badstatus1.html HTTP/1.1" 999 1024
+
+# Status code çok küçük (50 geçersiz, min 100)
+192.168.1.120 - - [15/Dec/2024:10:16:11 +0000] "GET /badstatus2.html HTTP/1.1" 50 512
+
+# Status code çok büyük (600 geçersiz, max 599)
+192.168.1.121 - - [15/Dec/2024:10:16:12 +0000] "GET /badstatus3.html HTTP/1.1" 600 256
+
+# Status code 2 haneli
+192.168.1.122 - - [15/Dec/2024:10:16:13 +0000] "GET /badstatus4.html HTTP/1.1" 20 128
+
+# Status code 4 haneli
+192.168.1.123 - - [15/Dec/2024:10:16:14 +0000] "GET /badstatus5.html HTTP/1.1" 2000 64
+
+# Status code alfabetik
+192.168.1.124 - - [15/Dec/2024:10:16:15 +0000] "GET /badstatus6.html HTTP/1.1" ABC 32
+
+# Status code eksik (regex match olmaz)
+192.168.1.125 - - [15/Dec/2024:10:16:16 +0000] "GET /nostatus.html HTTP/1.1" 1024
+
+# ========================================
+# REQUEST/METHOD HATALARI
+# ========================================
+
+# Geçersiz HTTP metodu
+192.168.1.126 - - [15/Dec/2024:10:16:20 +0000] "INVALID /test.html HTTP/1.1" 200 1024
+
+# Sadece path, method yok
+192.168.1.127 - - [15/Dec/2024:10:16:21 +0000] "/only-path.html HTTP/1.1" 200 512
+
+# Request field tamamen yanlış
+192.168.1.128 - - [15/Dec/2024:10:16:22 +0000] "THIS_IS_WRONG" 200 256
+
+# Request boş (tire)
+192.168.1.129 - - [15/Dec/2024:10:16:23 +0000] "-" 400 128
+
+# Request eksik (regex match olmaz)
+192.168.1.130 - - [15/Dec/2024:10:16:24 +0000] 404 64
+
+# Küçük harfli method (geçersiz)
+192.168.1.131 - - [15/Dec/2024:10:16:25 +0000] "get /lowercase.html HTTP/1.1" 200 32
+
+# ========================================
+# REGEX MATCH OLMAYAN SATIRLAR
+# ========================================
+
+# Tamamen bozuk log satırı
+This is not a valid log line at all!
+
+# Kısmen bozuk
+192.168.1.132 missing fields here
+
+# Sadece IP
+192.168.1.133
+
+# Boş satırlar (atlanmalı)
+
+
+# Farklı format (Apache değil)
+[2024-12-15 10:16:30] ERROR: Database connection failed
+
+# JSON formatı (yanlış tip)
+{"ip": "192.168.1.134", "method": "GET", "status": 200}
+
+# ========================================
+# KARMAŞIK SENARYOLAR
+# ========================================
+
+# Birden fazla hata (IP ve Status bozuk)
+BADIP - - [15/Dec/2024:10:16:35 +0000] "GET /multi1.html HTTP/1.1" 999 1024
+
+# Birden fazla hata (Timestamp ve Method bozuk)
+192.168.1.135 - - [BADTIME] "BADMETHOD /multi2.html HTTP/1.1" 200 512
+
+# Tüm field'ler bozuk
+BADIP - - [BADTIME] "BADMETHOD /multi3.html HTTP/1.1" 999 BADSIZE
+
+# Sadece bir field doğru (IP doğru, diğerleri bozuk)
+192.168.1.136 - - [BADTIME] "BADMETHOD /multi4.html HTTP/1.1" 999 BADSIZE
+
+# ========================================
+# ÖZEl KARAKTERLER VE EDGE CASE'LER
+# ========================================
+
+# Çok uzun path
+192.168.1.137 - - [15/Dec/2024:10:16:40 +0000] "GET /very/long/path/that/goes/on/and/on/and/on/file.html HTTP/1.1" 200 1024
+
+# Özel karakterler path'te
+192.168.1.138 - - [15/Dec/2024:10:16:41 +0000] "GET /special%20chars%3F%26%3D.html HTTP/1.1" 200 512
+
+# Query string'li URL
+192.168.1.139 - - [15/Dec/2024:10:16:42 +0000] "GET /search?q=test&page=1 HTTP/1.1" 200 2048
+
+# POST ile data
+192.168.1.140 - - [15/Dec/2024:10:16:43 +0000] "POST /api/submit HTTP/1.1" 201 4096
+
+# ========================================
+# SON VALID LOGLAR (Özet için)
+# ========================================
+
+192.168.1.141 - - [15/Dec/2024:10:16:50 +0000] "GET /summary1.html HTTP/1.1" 200 1024
+192.168.1.142 - - [15/Dec/2024:10:16:51 +0000] "GET /summary2.html HTTP/1.1" 200 512
+192.168.1.143 - - [15/Dec/2024:10:16:52 +0000] "GET /summary3.html HTTP/1.1" 200 256
+192.168.1.144 - - [15/Dec/2024:10:16:53 +0000] "GET /summary4.html HTTP/1.1" 200 128
+192.168.1.145 - - [15/Dec/2024:10:16:54 +0000] "GET /summary5.html HTTP/1.1" 200 6
