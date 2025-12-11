@@ -1,0 +1,8 @@
+README.md
+setup.py
+src/log_analysis_toolkit.egg-info/PKG-INFO
+src/log_analysis_toolkit.egg-info/SOURCES.txt
+src/log_analysis_toolkit.egg-info/dependency_links.txt
+src/log_analysis_toolkit.egg-info/entry_points.txt
+src/log_analysis_toolkit.egg-info/requires.txt
+src/log_analysis_toolkit.egg-info/top_level.txt

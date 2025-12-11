@@ -1,0 +1,3 @@
+[console_scripts]
+snap-analog = cli:main
+
