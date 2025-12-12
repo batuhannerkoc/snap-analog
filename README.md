@@ -5,8 +5,8 @@
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey)](https://github.com/batuhannerkoc/log-analyzer)
-[![Status](https://img.shields.io/badge/Status-Active-success)](https://github.com/batuhannerkoc/log-analyzer)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey)](https://github.com/batuhannerkoc/snap-analog)
+[![Status](https://img.shields.io/badge/Status-Active-success)](https://github.com/batuhannerkoc/snap-analog)
 
 **snap-analog** is a powerful command-line toolkit for parsing, analyzing, optimizing, and visualizing large-scale Apache log files. It generates both beautiful visual dashboards and structured JSON datasets, making it perfect for DevOps monitoring, security analysis, and data analytics pipelines.
 
@@ -33,8 +33,8 @@
 
 ```bash
 # Install
-git clone https://github.com/batuhannerkoc/log-analyzer.git
-cd log-analyzer
+git clone https://github.com/batuhannerkoc/snap-analog.git
+cd snap-analog
 pip install .
 
 # Generate test data
@@ -92,8 +92,8 @@ snap-analog analyze test.log --visualize
 ### ✔ Option 1 — Virtual Environment (Recommended)
 
 ```bash
-git clone https://github.com/batuhannerkoc/log-analyzer.git
-cd log-analyzer
+git clone https://github.com/batuhannerkoc/snap-analog.git
+cd snap-analog
 
 python3 -m venv venv
 source venv/bin/activate  # macOS/Linux
@@ -286,8 +286,8 @@ All visualizations support:
 ### Editable Install
 
 ```bash
-git clone https://github.com/batuhannerkoc/log-analyzer.git
-cd log-analyzer
+git clone https://github.com/batuhannerkoc/snap-analog.git
+cd snap-analog
 pip install -e .
 ```
 
@@ -318,7 +318,7 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-For bug reports or feature requests, please [open an issue](https://github.com/batuhannerkoc/log-analyzer/issues).
+For bug reports or feature requests, please [open an issue](https://github.com/batuhannerkoc/snap-analog/issues).
 
 ---
 
@@ -367,7 +367,7 @@ SOFTWARE.
 
 ## 📞 Support & Contact
 
-- **GitHub Issues:** [Report bugs or request features](https://github.com/batuhannerkoc/log-analyzer/issues)
+- **GitHub Issues:** [Report bugs or request features](https://github.com/batuhannerkoc/snap-analog/issues)
 - **Email:** [batuhannerkoc@gmail.com](mailto:batuhannerkoc@gmail.com)
 - **LinkedIn:** [Batuhan Erkoc](https://www.linkedin.com/in/batuhan-erkoç-aa618224a/)
 
@@ -388,7 +388,7 @@ If you find this project useful, please consider:
 **Developed with ❤️ by [Batuhan Erkoc](https://github.com/batuhannerkoc)**
 
 [![GitHub followers](https://img.shields.io/github/followers/batuhannerkoc?style=social)](https://github.com/batuhannerkoc)
-[![GitHub stars](https://img.shields.io/github/stars/batuhannerkoc/log-analyzer?style=social)](https://github.com/batuhannerkoc/log-analyzer/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/batuhannerkoc/snap-analog?style=social)](https://github.com/batuhannerkoc/snap-analog/stargazers)
 
 </div>
 
