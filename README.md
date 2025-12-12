@@ -32,9 +32,12 @@
 ## ⚡ Quick Start
 
 ```bash
-# Install
-git clone https://github.com/batuhannerkoc/snap-analog.git
-cd snap-analog
+# Install from PyPI (recommended)
+pip install snap-analog
+
+# Or install from source
+git clone https://github.com/batuhannerkoc/log-analyzer.git
+cd log-analyzer
 pip install .
 
 # Generate test data
