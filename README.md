@@ -89,11 +89,30 @@ snap-analog analyze test.log --visualize
 
 ## 📦 Installation
 
-### ✔ Option 1 — Virtual Environment (Recommended)
+### ✔ Option 1 — PyPI (Recommended)
 
 ```bash
-git clone https://github.com/batuhannerkoc/snap-analog.git
-cd snap-analog
+pip install snap-analog
+```
+
+Verify installation:
+```bash
+snap-analog --help
+```
+
+### ✔ Option 2 — From Source
+
+```bash
+git clone https://github.com/batuhannerkoc/log-analyzer.git
+cd log-analyzer
+pip install .
+```
+
+### ✔ Option 3 — Virtual Environment
+
+```bash
+git clone https://github.com/batuhannerkoc/log-analyzer.git
+cd log-analyzer
 
 python3 -m venv venv
 source venv/bin/activate  # macOS/Linux
@@ -103,30 +122,29 @@ pip install -r requirements.txt
 pip install .
 ```
 
-Verify installation:
-```bash
-snap-analog --help
-```
-
-### ✔ Option 2 — Direct Install
+### ✔ Option 4 — Development Mode
 
 ```bash
-pip install .
-```
-
-If you encounter "externally managed environment" error:
-```bash
-pip install --user .
-```
-
-### ✔ Option 3 — Development Mode
-
-```bash
+git clone https://github.com/batuhannerkoc/log-analyzer.git
+cd log-analyzer
 pip install -e .
 ```
 
 ---
 
+### 🔄 Upgrading
+
+```bash
+# From PyPI
+pip install --upgrade snap-analog
+
+# From source
+cd log-analyzer
+git pull
+pip install --upgrade .
+```
+
+---
 ## 🧪 Usage Examples
 
 ### Generating Test Logs
